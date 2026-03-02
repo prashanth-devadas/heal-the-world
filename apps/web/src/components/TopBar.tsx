@@ -1,6 +1,10 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-export function TopBar() {
+interface TopBarProps {
+  onBurgerClick: () => void;
+}
+
+export function TopBar({ onBurgerClick }: TopBarProps) {
   return (
     <header style={{
       position: "fixed",
@@ -15,6 +19,31 @@ export function TopBar() {
       gap: 16,
       zIndex: 100,
     }}>
+      <button
+        onClick={onBurgerClick}
+        aria-label="Open menu"
+        style={{
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          padding: "6px 4px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 4,
+          flexShrink: 0,
+        }}
+      >
+        {[0, 1, 2].map(i => (
+          <span key={i} style={{
+            display: "block",
+            width: 20,
+            height: 2,
+            background: "rgba(255,255,255,0.75)",
+            borderRadius: 1,
+          }} />
+        ))}
+      </button>
+
       <span style={{ fontWeight: 700, fontSize: 18, color: "#fff", letterSpacing: -0.5 }}>
         🌐 CrisisVault
       </span>
