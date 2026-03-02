@@ -21,6 +21,7 @@ export function TopBar({ onBurgerClick }: TopBarProps) {
     }}>
       <button
         onClick={onBurgerClick}
+        onMouseDown={(e) => e.stopPropagation()}
         aria-label="Open menu"
         style={{
           background: "none",

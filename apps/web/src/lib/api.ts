@@ -35,7 +35,7 @@ export async function fetchCampaign(id: string): Promise<Campaign> {
 export async function fetchOracleEvents(): Promise<Campaign[]> {
   const url = new URL(`${BASE}/oracle-events`, window.location.origin);
   const res = await fetch(url.toString());
-  if (!res.ok) return [];
+  if (!res.ok) throw new Error(`API error ${res.status}`);
   const json = await res.json();
   return json.data ?? [];
 }
