@@ -5,6 +5,7 @@ import { config } from "./config";
 import { campaignRoutes } from "./routes/campaigns";
 import { featureRoutes } from "./routes/features";
 import { wsRoutes } from "./routes/ws";
+import { oracleEventRoutes } from "./routes/oracleEvents";
 import { startProposalListener } from "./listeners/campaignProposalListener";
 
 const app = Fastify({ logger: true });
@@ -14,6 +15,7 @@ app.register(websocket);
 app.register(campaignRoutes, { prefix: "/api/v1" });
 app.register(featureRoutes, { prefix: "/api/v1" });
 app.register(wsRoutes, { prefix: "/api/v1" });
+app.register(oracleEventRoutes, { prefix: "/api/v1" });
 
 app.get("/health", async () => ({ status: "ok", ts: Date.now() }));
 
