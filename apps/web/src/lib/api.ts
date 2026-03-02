@@ -12,6 +12,7 @@ export interface Campaign {
   bbox: [number, number, number, number]; // [minLng, minLat, maxLng, maxLat]
   oracle_sources: string[];
   created_at: string;
+  predicted?: boolean; // true for oracle watch-list events (anticipated mode)
 }
 
 export async function fetchCampaigns(params?: { status?: string; type?: string }): Promise<Campaign[]> {
@@ -29,4 +30,12 @@ export async function fetchCampaign(id: string): Promise<Campaign> {
   if (!res.ok) throw new Error(`API error ${res.status}`);
   const json = await res.json();
   return json.data;
+}
+
+export async function fetchOracleEvents(): Promise<Campaign[]> {
+  const url = new URL(`${BASE}/oracle-events`, window.location.origin);
+  const res = await fetch(url.toString());
+  if (!res.ok) return [];
+  const json = await res.json();
+  return json.data ?? [];
 }
