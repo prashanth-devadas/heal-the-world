@@ -9,6 +9,7 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    host: true,
     proxy: {
       "/api": {
         target: "http://localhost:3001",
@@ -24,7 +25,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          cesium: ["@cesium/engine"],
+          cesium: ["cesium"],
           deckgl: ["@deck.gl/core", "@deck.gl/layers"],
           wallet: ["@rainbow-me/rainbowkit", "wagmi", "viem"],
         },
