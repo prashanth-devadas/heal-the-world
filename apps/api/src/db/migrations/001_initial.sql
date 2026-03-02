@@ -103,7 +103,8 @@ INSERT INTO features (key, description, enabled) VALUES
   ('conflict_campaigns', 'Enable conflict zone campaign type', true),
   ('climate_prediction_v2', 'Next-gen climate ML model', false),
   ('institutional_dashboard', 'Institution analytics panel', true),
-  ('multi_chain_bridge', 'Cross-chain donation bridge', false);
+  ('multi_chain_bridge', 'Cross-chain donation bridge', false),
+  ('risk_heatmap', 'Deck.gl risk heatmap overlay on globe', true);
 
 CREATE INDEX idx_campaigns_status ON campaigns(status);
 CREATE INDEX idx_campaigns_centroid ON campaigns USING GIST(centroid);

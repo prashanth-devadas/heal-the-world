@@ -49,9 +49,10 @@ function makeMarkerSvg(campaign: Campaign): string {
 interface GlobeProps {
   campaigns: Campaign[];
   onSelect: (campaign: Campaign) => void;
+  onCanvasReady?: (canvas: HTMLCanvasElement) => void;
 }
 
-export function Globe({ campaigns, onSelect }: GlobeProps) {
+export function Globe({ campaigns, onSelect, onCanvasReady }: GlobeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<any>(null);
 
@@ -83,12 +84,13 @@ export function Globe({ campaigns, onSelect }: GlobeProps) {
     viewer.scene.globe.enableLighting = true;
 
     viewerRef.current = viewer;
+    onCanvasReady?.(viewer.scene.canvas);
 
     return () => {
       viewer.destroy();
       viewerRef.current = null;
     };
-  }, []);
+  }, [onCanvasReady]);
 
   useEffect(() => {
     const viewer = viewerRef.current;

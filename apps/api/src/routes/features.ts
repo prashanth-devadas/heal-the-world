@@ -6,7 +6,6 @@ export async function featureRoutes(app: FastifyInstance) {
     const { data } = await db
       .from("features")
       .select("key,enabled,rollout_pct,environments");
-    const flags = Object.fromEntries((data || []).map((f) => [f.key, f.enabled]));
-    return reply.send(flags);
+    return reply.send({ data: data || [] });
   });
 }
