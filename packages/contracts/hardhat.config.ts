@@ -32,8 +32,8 @@ const config: HardhatUserConfig = {
     },
     "base-sepolia": {
       url: "https://sepolia.base.org",
-      accounts: process.env.DEPLOYER_PRIVATE_KEY
-        ? [process.env.DEPLOYER_PRIVATE_KEY]
+      accounts: process.env.TESTNET_DEPLOYER_PRIVATE_KEY
+        ? [process.env.TESTNET_DEPLOYER_PRIVATE_KEY]
         : [],
     },
   },

@@ -1,0 +1,47 @@
+name: Deploy Contracts to Base Sepolia
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "deploy" to confirm'
+        required: true
+
+jobs:
+  deploy:
+    name: Deploy to Base Sepolia
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.confirm == 'deploy' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Compile contracts
+        working-directory: packages/contracts
+        run: pnpm compile
+
+      - name: Deploy to Base Sepolia
+        working-directory: packages/contracts
+        env:
+          TESTNET_DEPLOYER_PRIVATE_KEY: ${{ secrets.TESTNET_DEPLOYER_PRIVATE_KEY }}
+        run: pnpm deploy:base-sepolia
+
+      - name: Print deployed addresses
+        working-directory: packages/contracts
+        run: |
+          if [ -f scripts/addresses.json ]; then
+            echo "=== Deployed Addresses ==="
+            cat scripts/addresses.json
+          fi
